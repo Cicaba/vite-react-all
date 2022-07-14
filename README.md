@@ -29,8 +29,8 @@
 
 ## 截图展示
 
-![易大师](http://cicaba.top:2015/dir/index.png)
+![易大师](http://cicaba.cn:2015/dir/index.png)
 
 ### 请作者喝杯奶茶
 
-![易大师](http://cicaba.top:2015/dir/wx.png)
+![易大师](http://cicaba.cn:2015/dir/wx.png)
