@@ -1,5 +1,4 @@
-import React, { FC, Fragment } from 'react'
-
+import React, { FC, Fragment, ReactNode } from 'react'
 // import { connect } from 'react-redux';
 import { SCommon } from '@/redux/state/common'
 // import api from '@/api'

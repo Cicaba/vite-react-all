@@ -2,6 +2,7 @@ import React, { FC, Fragment, useEffect, useState } from "react";
 import { Layout, Breadcrumb, Row, Col, Menu } from 'antd';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom'
 import { connect } from 'react-redux'
+import Loading from "@/components/loading"
 import Tabs from './tabs'
 import { SCommon } from '@/redux/state/common'
 import { SLocal } from '@/redux/state/local'
@@ -24,7 +25,8 @@ interface Connect {
   setTabName(data: string[]): void,
 }
 interface Props extends Connect, SCommon, SLocal {
-  refresh: boolean
+  refresh: boolean,
+  spinning: boolean,
 }
 
 /**
@@ -116,7 +118,9 @@ const comprehensive: FC<Props> = (props) => {
           <Content>
             <Tabs menuItem={menuItem} setSelectedKeys={setSelectedKeys} setOpenKeys={setOpenKeys}></Tabs>
             <div className="m-4 page-main bg-white shadow">
-              {props.refresh ? <Outlet /> : null}
+              <Loading spinning={props.spinning}>
+                {props.refresh ? <Outlet /> : null}
+              </Loading>
             </div>
           </Content>
         </Layout>
@@ -138,6 +142,7 @@ export default connect(
       dispatch({
         type: 'tabName', state: data
       })
-    }
+    },
+
   })
 )(comprehensive)

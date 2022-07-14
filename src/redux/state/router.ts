@@ -1,3 +1,5 @@
+import asyncRoute from "@/routes/asyncRoute"
+
 export interface IRoutes {
   path: string,
   name: string,
@@ -9,14 +11,5 @@ export interface IRoutes {
   children?: IRoutes[]
 }
 export type TRoutes = 'router';
-let routes: IRoutes[] = [
-  {
-    path: "/",
-    name: "index",
-    hidden: true,
-    redirect: "/index",
-    icon: "",
-  },
-
-];
+let routes: IRoutes[] = asyncRoute;
 export default routes

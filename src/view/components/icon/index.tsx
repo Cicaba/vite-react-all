@@ -1,5 +1,5 @@
 import { FC, Fragment } from "react";
-
+import api from '@/api'
 export interface TextProps {
   title: string;
 }

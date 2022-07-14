@@ -13,6 +13,18 @@ let setLocal = (state: SLocal = local, action: IAction) => {
       return {
         ...state, [action.type]: action.state
       }
+    case 'userInfo':
+      return {
+        ...state, [action.type]: action.state
+      }
+    case 'userName':
+      return {
+        ...state, [action.type]: action.state
+      }
+    case 'remember':
+      return {
+        ...state, [action.type]: action.state
+      }
     default:
       return state
   }

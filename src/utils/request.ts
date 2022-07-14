@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { AxiosResponse } from 'axios'
-let loading: { close(): void }
+import store from '@/redux/index'
+import { message } from 'antd';
 let urls: Array<any> = []
 // 创建 axios 实例
 
@@ -12,63 +13,50 @@ const request = axios.create({
 
 // 异常拦截处理器
 const errorHandler = (error: { message: string, request: AxiosResponse | any, config: IObject<any> }) => {
-    // const { getStatus, logout } = useLayoutStore()
-    // loading.close()
+    store.dispatch({
+        type: 'spinning',
+        state: false
+    })
     console.log(`err${error}`)
     if (error.request.status === 401) {
-        let title = '请求失败'
         // if (getStatus.ACCESS_TOKEN) {
         //     logout()
         // }
-        // ElNotification({
-        //     title,
-        //     message: "身份认证失败",
-        //     type: 'error'
-        // })
+        message.error('身份认证失败');
     } else {
         if (error.request.responseText) {
             let data = JSON.parse(error.request.responseText)
-            // ElNotification({
-            //     title: '提示',
-            //     message: data.message,
-            //     type: 'error'
-            // })
+            message.error(data.message);
         } else {
-            // ElNotification({
-            //     title: '提示',
-            //     message: "请求超时",
-            //     type: 'error'
-            // })
+            message.error('请求超时');
             // logout()
         }
 
     }
     urls.splice(urls.findIndex(v => v === error.config.url), 1)
     if (urls.length === 0) {
-        // loading.close()
+        store.dispatch({
+            type: 'spinning',
+            state: false
+        })
     }
     return Promise.reject(error)
 }
 
 // request interceptor
 request.interceptors.request.use((config) => {
-    // const { getStatus } = useLayoutStore()
-    // if (urls.length === 0) {
-    //     loading = ElLoading.service({
-    //         lock: true,
-    //         text: 'Loading',
-    //         spinner: 'el-icon-loading',
-    //         background: 'rgba(0, 0, 0, 0.4)'
-    //     })
-    // }
+    store.dispatch({
+        type: 'spinning',
+        state: true
+    })
     if (!urls.includes(config.url)) {
         urls.push(config.url)
-        // }
-        // const token = getStatus.ACCESS_TOKEN
+        const token = store.getState().local.token
         // 如果 token 存在
         // 让每个请求携带自定义 token 请根据实际情况自行修改
-        // if (token) {
-        //     config.headers['Access-Token'] = token
+        if (token) {
+            config.headers['Access-Token'] = token
+        }
     }
     return config
 }, errorHandler)
@@ -78,17 +66,15 @@ request.interceptors.response.use((response: AxiosResponse<IResponse>) => {
     const { data, config } = response
     urls.splice(urls.findIndex(v => v === config.url), 1)
     if (urls.length === 0) {
-        // loading.close()
+        store.dispatch({
+            type: 'spinning',
+            state: false
+        })
     }
-
     if (!data.success && data.hasOwnProperty("success")) {
-        let title = '请求失败'
-        // ElNotification({
-        //     title,
-        //     message: data.message,
-        //     type: 'error'
-        // })
-        return Promise.reject(new Error(data.msg || 'Error'))
+        let title = '请求失败，'
+        message.error(title+data.message);
+        return Promise.reject(new Error(data.message || 'Error'))
     }
     return response
 }, errorHandler)

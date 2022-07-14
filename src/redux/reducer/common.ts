@@ -33,6 +33,10 @@ let setCommon = (state: SCommon = common, action: IAction) => {
       return {
         ...state, [action.type]: action.state
       }
+    case 'spinning':
+      return {
+        ...state, [action.type]: action.state
+      }
     default:
       return state
   }

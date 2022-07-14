@@ -14,7 +14,6 @@ import { PersistGate } from 'redux-persist/lib/integration/react';
  * @date 20/04/2022
  */
 const structured = (routers: IRoutes[]) => {
-
   return routers.map((route: IRoutes) => {
     if (route.children && route.children.length) {
       return (<Route key={route.name} path={route.path} element={element(route)}>
@@ -46,59 +45,62 @@ const element = (route: IRoutes): ReactNode => {
 const AppRouter: FC = () => {
   const [route, setRoute] = useState([])
   useLayoutEffect(() => {
-    // api.getMenu().then(res => {
-    let data = [
-      {
-        path: "index",
-        name: "工作台",
-        hidden: false,
-        redirect: "",
-        icon: "BarChartOutlined",
-        element: 'workbench',
-      },
-      {
-        path: "components",
-        name: "组件",
-        hidden: false,
-        redirect: "",
-        icon: "ClusterOutlined",
-        children: [
-          {
-            path: "icon",
-            name: "图标",
-            hidden: false,
-            redirect: "",
-            icon: "BarChartOutlined",
-            element: 'icon',
-          },
-          {
-            path: "icon1",
-            name: "图标1",
-            hidden: false,
-            redirect: "",
-            icon: "BarChartOutlined",
-            element: 'icon',
-          },
-          {
-            path: "icon2",
-            name: "图标2",
-            hidden: false,
-            redirect: "",
-            icon: "BarChartOutlined",
-            element: 'icon',
-          }
-        ]
-      }
-    ]
+    api.getMenu().then(res => {
+      const { data } = res.data;
+    // let data = [
+    //   {
+    //     path: "index",
+    //     name: "工作台",
+    //     hidden: false,
+    //     redirect: "",
+    //     icon: "BarChartOutlined",
+    //     element: 'workbench',
+    //   },
+    //   {
+    //     path: "components",
+    //     name: "组件",
+    //     hidden: false,
+    //     redirect: "",
+    //     icon: "ClusterOutlined",
+    //     children: [
+    //       {
+    //         path: "icon",
+    //         name: "图标",
+    //         hidden: false,
+    //         redirect: "",
+    //         icon: "BarChartOutlined",
+    //         element: 'icon',
+    //       },
+    //       {
+    //         path: "icon1",
+    //         name: "图标1",
+    //         hidden: false,
+    //         redirect: "",
+    //         icon: "BarChartOutlined",
+    //         element: 'icon',
+    //       },
+    //       {
+    //         path: "icon2",
+    //         name: "图标2",
+    //         hidden: false,
+    //         redirect: "",
+    //         icon: "BarChartOutlined",
+    //         element: 'icon',
+    //       }
+    //     ]
+    //   }
+    // ]
     let tileData = tileRouter(data)
     store.dispatch({ type: 'tileRouter', state: tileData })
     store.dispatch({ type: 'router', state: data })
     store.dispatch({ type: 'menuItems', state: copeWithMenuItems(data) })
     store.dispatch({ type: 'searchList', state: copeWithSearchList(data) })
     // store.dispatch({ type: 'full', state: false })
+      console.log(store.getState().router,structured(store.getState().router));
+      
     setRoute(structured(store.getState().router))
 
-    // })
+    })
   }, [])
   return (
     <Provider store={store}>

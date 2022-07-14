@@ -38,8 +38,9 @@ const setRouteElement = (router: IRoutes[]) => {
 const setRouter = (state: IRoutes[] = Routes, action: IAction): IRoutes[] => {
   if (action.type !== 'router') return state
   let menuItem = setRouteElement(action.state)
+  let baseItem = setRouteElement(state)
   return [
-    ...state,
+    ...baseItem,
     {
       path: "/",
       name: "layout",

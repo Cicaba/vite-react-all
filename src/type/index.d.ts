@@ -1,7 +1,7 @@
 export { }
 declare global {
     interface IResponse<T = any> {
-        msg?: string;
+        message?: string;
         success: Boolean;
         code: number;
         data: T;

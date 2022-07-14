@@ -1,6 +1,9 @@
+import { truncate } from 'fs'
 import { MockMethod } from 'vite-plugin-mock'
 export default [
   {
+    statusCode: 200,
+    timeout: 1000,
     url: '/mock/api/common/getMenu',
     method: 'get',
     response: (): IResponse => {
@@ -48,9 +51,35 @@ export default [
                 element: 'icon',
               }
             ]
+          },
+          {
+            path: "404",
+            name: "404",
+            hidden: true,
+            redirect: "",
+            icon: "",
+            element: '404',
           }
         ],
-        msg: ''
+        message: ''
+      }
+    },
+  },
+  {
+    statusCode: 200,
+    timeout: 4000,
+    url: '/mock/api/common/login',
+    method: 'post',
+    response: (): IResponse => {
+      return {
+        code: 200,
+        success: true,
+        data: {
+          username: "易大师",
+          orgCode: 10000,
+          token:new Date().getTime()
+        },
+        message: ''
       }
     },
   },

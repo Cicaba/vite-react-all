@@ -19,17 +19,19 @@ export interface SCommon {
   tileRouter: TileRouter[],
   full: boolean,
   searchList: SearchList[],
-  menuItems: []
-  refresh: boolean
+  menuItems: [],
+  refresh: boolean,
+  spinning: boolean
 
 }
-export type TCommon = 'userInfo' | 'tileRouter' | 'tabName' | 'full' | 'searchList' | 'menuItems' | 'refresh';
+export type TCommon = 'userInfo' | 'tileRouter' | 'tabName' | 'full' | 'searchList' | 'menuItems' | 'refresh' | 'spinning';
 let common: SCommon = {
   userInfo: {},
   tabName: [],
   tileRouter: [],
   full: false,
   refresh: true,
+  spinning: false,
   searchList: [],
   menuItems: [],
 }
