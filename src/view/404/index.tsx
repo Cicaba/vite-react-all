@@ -18,7 +18,7 @@ const E404: FC = () => {
           <div className='bullshit__oops'>你访问的页面不存在!</div>
           <div className='bullshit__info'>
             All rights reserved
-            <a className='bullshit__info-link' href='https://www.cicaba.cn' target='_blank'>Cicaba</a>
+            <a className='bullshit__info-link' href='http://www.cicaba.cn' target='_blank'>Cicaba</a>
           </div>
           <div className='bullshit__headline'>
             你访问的地址不正确
