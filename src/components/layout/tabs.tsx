@@ -87,7 +87,7 @@ const tabs: FC<Props> = (props) => {
       navigate(activeKey)
     }
   }
-  const tabEdit = (targetKey: string, action: string) => {
+  const tabEdit = (targetKey: string, action: 'add' | 'remove') => {
     if (action === 'remove') {
       if (tabPane.length === 1) {
         setTabPane([])
